@@ -28,6 +28,16 @@ The goals / steps of this project are the following:
 [grayscale]: ./output_images/grayscale.png "Grayscale"
 [augmented]: ./output_images/augmented.png "Augmented"
 
+[12_priority_road]: ./web_images/12_priority_road.jpg "Priority road"
+[1_speed_limit_30]: ./web_images/1_speed_limit_30.jpg "30"
+[21_double_curve]: ./web_images/21_double_curve.jpg "Double curve"
+[25_road_work]: ./web_images/25_road_work.jpg "Road work"
+[32_end_of_limits]: ./web_images/32_end_of_limits.jpg "End of limits"
+[33_turn_right]: ./web_images/33_turn_right.jpg "Turn right"
+[40_roundabout]: ./web_images/40_roundabout.jpg "Roundabout"
+[8_speed_limit_120]: ./web_images/8_speed_limit_120.jpg "120"
+
+
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
@@ -68,7 +78,7 @@ Here is an example of an original image and its conversion to grayscale:
 
 As a second step, I normalized and scaled the image data because this way the neural network trains faster.
 
-I decided to generate additional data because my network was still overfitting the original data set even after performing the steps above and implementing dropout. To add more data to the the data set, I transformed the grayscale images by randomly rotating them by up to ten degrees and adding noise to them. For rotating, I used an implementation from this article, which discusses data augmentation for neural networks: [medium_article](https://medium.com/@thimblot/data-augmentation-boost-your-image-dataset-with-few-lines-of-python-155c2dc1baec) For adding noise, I used the numpy random.normal function with zero mean and a sigma value of 10. In the article mentioned above, the author additionally suggests flipping images horizontally. However, this does not make sense for traffic signs, as some of them are specific to eiher the left or right side, so I left this step out.
+I decided to generate additional data because my network was still overfitting the original data set even after performing the steps above and implementing dropout. To add more data to the the data set, I transformed the grayscale images by randomly rotating them by up to ten degrees and adding noise to them. For rotating, I used an implementation from this [article](https://medium.com/@thimblot/data-augmentation-boost-your-image-dataset-with-few-lines-of-python-155c2dc1baec) , which discusses data augmentation for neural networks. For adding noise, I used the numpy random.normal function with zero mean and a sigma value of 10. In the article mentioned above, the author additionally suggests flipping images horizontally. However, this does not make sense for traffic signs, as most of them are unsymmetric, and some of them are even specific to eiher the left or right side, so I left this step out.
 
 Here is an example of an original grayscale image and its noisy rotated version:
 
@@ -83,50 +93,41 @@ My final model consisted of the following layers:
 
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
+| Input         		| 32x32x1 grayscale image   					| 
+| Convolution 5x5     	| 1x1 stride, valid padding, outputs 28x28x6 	|
 | RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
- 
+| Max pooling	      	| 2x2 stride,  outputs 14x14x6 					|
+| Dropout   	      	| keep probability = 0.8 						|
+| Convolution 5x5     	| 1x1 stride, valid padding, outputs 28x28x6 	|
+| RELU					|												|
+| Max pooling	      	| 2x2 stride,  outputs 5x5x16					|
+| Dropout   	      	| keep probability = 0.8 						|
+| Flatten				| output 400   									|
+| Fully connected		| output 120   									|
+| RELU					|												|
+| Dropout   	      	| keep probability = 0.8 						|
+| Fully connected		| output 84   									|
+| RELU					|												|
+| Dropout   	      	| keep probability = 0.8 						|
+| Fully connected		| output 43   									|
 
 
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
-To train the model, I used an ....
+To train the model, I used an Adam optimizer with a learning rate of 0.001. I achieved the best results with a batch size of 32, 15 epochs and a dropout keep-probability of 0.8.
 
-#### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+#### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem
 
-My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
-
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
-
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
- 
+The first architecture I chose was the original LeNet function from the character recognition lesson. I saw this well-tested, strong model as a good starting point. With this, I could achieve an accuracy of around 80% in the first shot. As this model was overfitting the training set, I took some measures which I already discussed earlier in this report (grayscale images as input, adding a dropout layer after each layer of the network, augmenting the input data). Furthermore I experimented with different batch epoch and keep-probability values and stuck to the ones that gave me the best results.
 
 ### Test a Model on New Images
 
 #### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
-Here are five German traffic signs that I found on the web:
+Here are eight German traffic signs that I found on the web:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+![alt text][12_priority_road] ![alt text][1_speed_limit_30] ![alt text][21_double_curve] ![alt text][25_road_work] 
+![alt text][32_end_of_limits] ![alt text][33_turn_right] ![alt text][40_roundabout] ![alt text][8_speed_limit_120]
 
 The first image might be difficult to classify because ...
 
