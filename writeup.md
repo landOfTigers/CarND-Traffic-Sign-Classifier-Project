@@ -17,17 +17,8 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/visualization.jpg "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
 [grayscale]: ./output_images/grayscale.png "Grayscale"
 [augmented]: ./output_images/augmented.png "Augmented"
-
 [12_priority_road]: ./web_images/12_priority_road.jpg "Priority road"
 [1_speed_limit_30]: ./web_images/1_speed_limit_30.jpg "30"
 [21_double_curve]: ./web_images/21_double_curve.jpg "Double curve"
@@ -36,8 +27,6 @@ The goals / steps of this project are the following:
 [33_turn_right]: ./web_images/33_turn_right.jpg "Turn right"
 [40_roundabout]: ./web_images/40_roundabout.jpg "Roundabout"
 [8_speed_limit_120]: ./web_images/8_speed_limit_120.jpg "120"
-
-
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
@@ -163,22 +152,12 @@ The 120 km/h speed limit image might have been misclassified because the picture
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+When making predictions, the model is relatively certain about it's decisions (all of them have a top softmax probability of over 90 per cent). To illustrate this, here are the top five soft max probabilities for the roundabout sign:
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
-
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
-
-
-For the second image ... 
-
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-#### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
-
-
+| Probability 			| Prediction											| 
+|:---------------------:|:-----------------------------------------------------:| 
+| .967         			| Roundabout mandatory   								| 
+| .029     				| Priority road 										|
+| .026					| End of no passing by vehicles over 3.5 metric tons	|
+| .019	      			| Right-of-way at the next intersection					|
+| .001				    | Speed limit (100km/h)      							|
