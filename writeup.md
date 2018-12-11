@@ -78,7 +78,7 @@ Here is an example of an original image and its conversion to grayscale:
 
 As a second step, I normalized and scaled the image data because this way the neural network trains faster.
 
-I decided to generate additional data because my network was still overfitting the original data set even after performing the steps above and implementing dropout. To add more data to the the data set, I transformed the grayscale images by randomly rotating them by up to ten degrees and adding noise to them. For rotating, I used an implementation from this [article](https://medium.com/@thimblot/data-augmentation-boost-your-image-dataset-with-few-lines-of-python-155c2dc1baec) , which discusses data augmentation for neural networks. For adding noise, I used the numpy random.normal function with zero mean and a sigma value of 10. In the article mentioned above, the author additionally suggests flipping images horizontally. However, this does not make sense for traffic signs, as most of them are unsymmetric, and some of them are even specific to eiher the left or right side, so I left this step out.
+I decided to generate additional data because my network was still overfitting the original data set even after performing the steps above and implementing dropout. To add more data to the the data set, I transformed the grayscale images by randomly rotating them by up to five degrees and adding noise to them. For rotating, I used an implementation from this [article](https://medium.com/@thimblot/data-augmentation-boost-your-image-dataset-with-few-lines-of-python-155c2dc1baec) , which discusses data augmentation for neural networks. For adding noise, I used the numpy random.normal function with zero mean and a sigma value of 5, as these values yielded good results in reducing the overfitting of the network. In the article mentioned above, the author additionally suggests flipping images horizontally. However, this does not make sense for traffic signs, as most of them are unsymmetric, and some of them are even specific to eiher the left or right side, so I left this step out.
 
 Here is an example of an original grayscale image and its noisy rotated version:
 
@@ -118,6 +118,11 @@ To train the model, I used an Adam optimizer with a learning rate of 0.001. I ac
 
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem
 
+My final model results were:
+* training set accuracy of 0.990
+* validation set accuracy of 0.950 
+* test set accuracy of 0.939
+
 The first architecture I chose was the original LeNet function from the character recognition lesson. I saw this well-tested, strong model as a good starting point. With this, I could achieve an accuracy of around 80% in the first shot. As this model was overfitting the training set, I took some measures which I already discussed earlier in this report (grayscale images as input, adding a dropout layer after each layer of the network, augmenting the input data). Furthermore I experimented with different batch epoch and keep-probability values and stuck to the ones that gave me the best results.
 
 ### Test a Model on New Images
@@ -126,25 +131,35 @@ The first architecture I chose was the original LeNet function from the characte
 
 Here are eight German traffic signs that I found on the web:
 
-![alt text][12_priority_road] ![alt text][1_speed_limit_30] ![alt text][21_double_curve] ![alt text][25_road_work] 
-![alt text][32_end_of_limits] ![alt text][33_turn_right] ![alt text][40_roundabout] ![alt text][8_speed_limit_120]
+![alt text][1_speed_limit_30] ![alt text][8_speed_limit_120] ![alt text][32_end_of_limits]
+![alt text][12_priority_road]  ![alt text][21_double_curve] ![alt text][25_road_work] 
+![alt text][33_turn_right] ![alt text][40_roundabout] 
 
-The first image might be difficult to classify because ...
+The road work sign might be difficult to classify because it is scratched. The speed limit signs might also be difficult to classify because they are at an angle. And the roundabout sign might be difficult to classify because it is low in contrast. I had to crop the images so that the sign fills most of the image surface. Otherwise, the predictions were poor for signs that were far away in the image, probably because too much information was lost when downscaling the images to 32 by 32 pixels.
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
 Here are the results of the prediction:
 
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Image									| Prediction									| 
+|:-------------------------------------:|:---------------------------------------------:| 
+| Turn right ahead						| Turn right ahead 								| 
+| Speed limit (120km/h)					| No passing for vehicles over 3.5 metric tons	|
+| Roundabout mandatory					| Roundabout mandatory							|
+| Priority road							| Priority road					 				|
+| Road work								| Road work										|
+| End of all speed and passing limits	| End of all speed and passing limits			|
+| Double curve							| Right-of-way at the next intersection			|
+| Speed limit (30km/h)					| Speed limit (30km/h)							|
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 6 of the 8 traffic signs, which gives an accuracy of 75%. This is a decent result for images randomly taken from the web and a the current state of the network. 
+
+Here is my analysis of the two mistakes the model made: 
+
+When looking at the double curve example image that I displayed in the exploratory visualization section of the Jupyter notebook, it becomes obvious that the resolution in the training set is too low to distinguish between a double curve and a right-of-way at the next intersection symbol, even for a human eye. To mitigate this problem, one could implement an algorithm for the pre-processing phase that would automatically detect a bounding box around the traffic sign and crop the image in such a way that the sign covers most of the image space, thus improving the resolution of the symbols.
+
+The 120 km/h speed limit image might have been misclassified because the picture is taken from an angle. This could be compensated by applying a perspective transformation, like we did in the advanced lane lines project.
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
