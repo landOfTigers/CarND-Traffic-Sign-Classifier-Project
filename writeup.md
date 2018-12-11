@@ -73,7 +73,7 @@ Here is an example of an original grayscale image and its noisy rotated version:
 
 ![alt text][augmented]
 
-The augmented data set contains four times the amount of images of the original one, as three modified versions added for each image: one which is rotated, one where noise is added, and one where both of these steps are performed.  
+The augmented data set contains four times the amount of images as the original one, as three modified versions were added for each image: one which was rotated, one where noise was added, and one where both of these steps were performed.  
 
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
