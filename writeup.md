@@ -165,14 +165,23 @@ The 120 km/h speed limit image might have been misclassified because the picture
 
 When making predictions, the model is relatively certain about it's decisions (all of them have a top softmax probability of over 90 per cent). To illustrate this, here are the top five soft max probabilities for the the eight traffic signs:
 
-##### Turn right ahead                                                                                       ##### Speed limit (120km/h)
-| Probability 	| Prediction							| | Probability 	| Prediction									| 
-|:-------------:|:-------------------------------------:| |:---------------:|:---------------------------------------------:|
-| 1.         	| Turn right ahead   					| | .967 			| No passing for vehicles over 3.5 metric tons	| 
-| 0.     		| Right-of-way at the next intersection	| | .016 			| Roundabout mandatory 							|
-| 0.			| No entry								| | .008			| Slippery road									|
-| 0.	   		| Keep left								| | .004			| No passing									|
-| 0.			| Ahead only							| | .002			| Dangerous curve to the left					|
+##### Turn right ahead
+| Probability 			| Prediction											| 
+|:---------------------:|:-----------------------------------------------------:| 
+| 1.         			| Turn right ahead   									| 
+| 0.     				| Right-of-way at the next intersection					|
+| 0.					| No entry												|
+| 0.	      			| Keep left												|
+| 0.				    | Ahead only      										|
+
+##### Speed limit (120km/h)
+| Probability 			| Prediction											| 
+|:---------------------:|:-----------------------------------------------------:| 
+| .967         			| No passing for vehicles over 3.5 metric tons			| 
+| .016     				| Roundabout mandatory 									|
+| .008					| Slippery road											|
+| .004	      			| No passing											|
+| .002				    | Dangerous curve to the left							|
 
 ##### Roundabout mandatory
 | Probability 			| Prediction											| 
@@ -213,7 +222,7 @@ When making predictions, the model is relatively certain about it's decisions (a
 ##### Double curve
 | Probability 			| Prediction											| 
 |:---------------------:|:-----------------------------------------------------:| 
-| 0.976        			| Right-of-way at the next intersection					|  
+| 0.976        			| Right-of-way at the next intersection					| 
 | 0.011   				| Beware of ice/snow 									|
 | 0.011					| Slippery road											|
 | 0.001	      			| Children crossing										|
