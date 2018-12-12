@@ -152,8 +152,27 @@ The 120 km/h speed limit image might have been misclassified because the picture
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-When making predictions, the model is relatively certain about it's decisions (all of them have a top softmax probability of over 90 per cent). To illustrate this, here are the top five soft max probabilities for the roundabout sign:
+When making predictions, the model is relatively certain about it's decisions (all of them have a top softmax probability of over 90 per cent). To illustrate this, here are the top five soft max probabilities for the the eight traffic signs:
 
+##### Turn right ahead
+| Probability 			| Prediction											| 
+|:---------------------:|:-----------------------------------------------------:| 
+| 1.         			| Turn right ahead   									| 
+| 0.     				| Right-of-way at the next intersection					|
+| 0.					| No entry												|
+| 0.	      			| Keep left												|
+| 0.				    | Ahead only      										|
+
+##### Speed limit (120km/h)
+| Probability 			| Prediction											| 
+|:---------------------:|:-----------------------------------------------------:| 
+| .967         			| No passing for vehicles over 3.5 metric tons			| 
+| .016     				| Roundabout mandatory 									|
+| .008					| Slippery road											|
+| .004	      			| No passing											|
+| .002				    | Dangerous curve to the left							|
+
+##### Roundabout mandatory
 | Probability 			| Prediction											| 
 |:---------------------:|:-----------------------------------------------------:| 
 | .967         			| Roundabout mandatory   								| 
@@ -161,3 +180,48 @@ When making predictions, the model is relatively certain about it's decisions (a
 | .026					| End of no passing by vehicles over 3.5 metric tons	|
 | .019	      			| Right-of-way at the next intersection					|
 | .001				    | Speed limit (100km/h)      							|
+
+##### Priority road
+| Probability 			| Prediction											| 
+|:---------------------:|:-----------------------------------------------------:| 
+| 1.         			| Priority road   										| 
+| 0.     				| Roundabout mandatory 									|
+| 0.					| Speed limit (100km/h)									|
+| 0.	      			| Yield													|
+| 0.				    | Speed limit (30km/h)									|
+
+##### Road work
+| Probability 			| Prediction											| 
+|:---------------------:|:-----------------------------------------------------:| 
+| 0.945        			| Road work   											| 
+| 0.055    				| Bumpy road 											|
+| 0.					| Turn right ahead										|
+| 0.	      			| Keep left												|
+| 0.				    | Traffic signals										|
+
+##### End of all speed and passing limits
+| Probability 			| Prediction											| 
+|:---------------------:|:-----------------------------------------------------:| 
+| 0.999        			| End of all speed and passing limits					| 
+| 0.     				| End of no passing 									|
+| 0.					| End of speed limit (80km/h)							|
+| 0.	      			| Priority road											|
+| 0.				    | Speed limit (30km/h)     								|
+
+##### Double curve
+| Probability 			| Prediction											| 
+|:---------------------:|:-----------------------------------------------------:| 
+| 0.976        			| Right-of-way at the next intersection					| 
+| 0.011   				| Beware of ice/snow 									|
+| 0.011					| Slippery road											|
+| 0.001	      			| Children crossing										|
+| 0.				    | Double curve     										|
+
+##### Speed limit (30km/h)
+| Probability 			| Prediction											| 
+|:---------------------:|:-----------------------------------------------------:| 
+| 1.        			| Speed limit (30km/h)   								| 
+| 0.					| Speed limit (50km/h) 									|
+| 0.					| Speed limit (20km/h)									|
+| 0.					| Speed limit (60km/h)									|
+| 0.				    | Speed limit (80km/h)     								|
