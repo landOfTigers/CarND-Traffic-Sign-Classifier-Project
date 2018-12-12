@@ -117,7 +117,13 @@ My final model results were:
 * validation set accuracy of 0.950 
 * test set accuracy of 0.939
 
-The first architecture I chose was the original LeNet function from the character recognition lesson. I saw this well-tested, strong model as a good starting point. With this, I could achieve an accuracy of around 80% in the first shot. As this model was overfitting the training set, I took some measures which I already discussed earlier in this report (grayscale images as input, adding a dropout layer after each layer of the network, augmenting the input data). Furthermore I experimented with different batch epoch and keep-probability values and stuck to the ones that gave me the best results.
+The first architecture I chose was the original LeNet function from the character recognition lesson. I saw this well-tested, strong model as a good starting point. With this, I could achieve an accuracy of around 80% in the first shot. As this model was overfitting the training set, I took some measures which I already discussed earlier in this report (grayscale images as input, adding a dropout layer after each layer of the network, augmenting the input data). 
+
+Furthermore I experimented with different batch epoch and keep-probability values and stuck to the ones that gave me the best results. My observation is that the model performs better with lower batch sizes and more epochs than the original design. I tested batch sizes from 16 to 128 in multiples of two steps and found 32 to be the best value. I increased the epoch size from 10 to 15 when I noticed that the model wasn't done training after 10 epochs.
+
+The key factor in reducing the overfitting (around ten per cent lower validation than training accuracy) was to introduce dropout layers, not only after the first convolutional layer, like I did in the beginning, but after each one of the layers in the network. In doing so, I had to increment the keep-probability from 0.5 to 0.8, otherwise the performance of the network would deteriorate in general (meaning that the even training accuracy went down significantly).
+
+I used an Adam optimizer, which means that the learning rate for a weight is divided by a moving average of recent gradients for that weight. This way, the model trains faster as compared to stochastic gradient descent.
 
 ### Test a Model on New Images
 
