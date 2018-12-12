@@ -17,6 +17,7 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
+[distribution]: ./output_images/dist_training_set.png "Distribution"
 [grayscale]: ./output_images/grayscale.png "Grayscale"
 [augmented]: ./output_images/augmented.png "Augmented"
 [12_priority_road]: ./web_images/12_priority_road.jpg "Priority road"
@@ -54,6 +55,10 @@ I used standard python and numpy functions to calculate summary statistics of th
 
 My exploratory visualization of the data set can be seen in the report.html file. It displays an example image for each of the 43 classes and sets the class number and name of the traffic sign (extracted from the csv file) as the title.
 
+Addionally, here is a distribution of the classes in the training examples:
+![alt text][distribution]
+
+There is a strong variation in the number of training examples for each traffic sign. This might lead to the neural network having a harder time in classifying signs with few examples correctly.
 
 ### Design and Test a Model Architecture
 
